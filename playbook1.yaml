@@ -3,20 +3,20 @@
   become_method: root
   tasks:
   - name: Get Artifacts
-     get_url:
-       url: http://54.174.183.219:8081/artifactory/CD-MY-STAGE/{{ item }}
-       url_username: "{{ artifactory_user }}"
-       url_password: "{{ artifactory_password }}"
-       dest: "{{ install_dir }}"
-       owner: tomcat
-       mode: 0755
-     with_items:
-      - jdk-8u191-linux-x64.tar.gz
-      - apache-tomcat-8.0.53.tar.gz
-      - tomcatsystemdscript
-     become: true
-     become_method: sudo
-     become_user: root 
+    get_url:
+      url: http://54.174.183.219:8081/artifactory/CD-MY-STAGE/{{ item }}
+      url_username: "{{ artifactory_user }}"
+      url_password: "{{ artifactory_password }}"
+      dest: "{{ install_dir }}"
+      owner: tomcat
+      mode: 0755
+    with_items:
+     - jdk-8u191-linux-x64.tar.gz
+     - apache-tomcat-8.0.53.tar.gz
+     - tomcatsystemdscript
+    become: true
+    become_method: sudo
+    become_user: root 
 
   - name: Unarchive Package
      unarchive: src="{{ install_dir }}/jdk-8u191-linux-x64.tar.gz"
@@ -47,11 +47,11 @@
     - export PATH=$PATH:{{ install_dir }}/{{ java_name }}/bin:{{ install_dir }}/{{ java_name }}/jre/bin
 
   - name: Add java path in .bash_profile
-  lineinfile:
-    dest=/root/.bash_profile
-    state=present
-    insertbefore=export
-    line='PATH=$PATH:/opt'
+    lineinfile:
+      dest=/root/.bash_profile
+      state=present
+      insertbefore=export
+      line='PATH=$PATH:/opt'
  
   - name: Write tomcat startupscript to /usr/lib/systemd/system/tomcat.service
     template: src="{{ install_dir }}/tomcatsystemdscript" dest=/usr/lib/systemd/system/tomcat.service mode=0755 owner=root backup=yes
@@ -67,18 +67,18 @@
     command: systemctl enable tomcat.service
   
   - name: Get Artifacts
-     get_url:
-       url: http://54.174.183.219:8081/artifactory/CD-MY-STAGE/{{ item }}
-       url_username: "{{ artifactory_user }}"
-       url_password: "{{ artifactory_password }}"
-       dest: "{{ jenkins_dir }}"
-       owner: tomcat
-       mode: 0755
-     with_items:
-      - jenkins.war
-     become: true
-     become_method: sudo
-     become_user: root 
+    get_url:
+      url: http://54.174.183.219:8081/artifactory/CD-MY-STAGE/{{ item }}
+      url_username: "{{ artifactory_user }}"
+      url_password: "{{ artifactory_password }}"
+      dest: "{{ jenkins_dir }}"
+      owner: tomcat
+      mode: 0755
+    with_items:
+     - jenkins.war
+    become: true
+    become_method: sudo
+    become_user: root 
   
   - name: start jenkins service
-    action: service name=jenkins enabled=yes state=started
+    command: systemctl start tomcat.service
