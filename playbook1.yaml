@@ -1,4 +1,4 @@
-- hosts: current
+- hosts: {{ hosts_prompt }}
   become: true
   become_method: root
   tasks:
