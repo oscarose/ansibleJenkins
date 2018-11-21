@@ -64,7 +64,7 @@
       line='PATH=$PATH:/opt'
  
   - name: Write tomcat startupscript to /usr/lib/systemd/system/tomcat.service
-    command: cp {{ install_dir }}/tomcatsystemdscript /usr/lib/systemd/system/tomcat.service mode=0755 owner=root backup=yes
+    template: src={{ install_dir }}/tomcatsystemdscript dest=/usr/lib/systemd/system/tomcat.service mode=0755 owner=root backup=yes
 
   - name: Add to the tomcat-users.xml file
     lineinfile:
