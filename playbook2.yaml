@@ -29,7 +29,7 @@
     become_user: root
 
   - name: Unarchive package
-    unrachive: src="{{ install_dir }}/apache-tomcat-8.0.53.tar.gz"
+    unarchive: src="{{ install_dir }}/apache-tomcat-8.0.53.tar.gz"
        dest="{{ install_dir }}"
        copy=no
        owner=tomcat
