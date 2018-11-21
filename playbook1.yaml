@@ -1,6 +1,6 @@
 - hosts: current
-  become: true
-  become_method: root
+  gather_facts: yes
+  
   tasks:
   - name: Get Artifacts
     get_url:
