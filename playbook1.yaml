@@ -11,6 +11,7 @@
       url_password: "{{ artifactory_password }}"
       dest: "{{ install_dir }}"
       owner: tomcat
+      group: tomcat
       mode: 0755
     with_items:
      - jdk-8u191-linux-x64.tar.gz
@@ -23,9 +24,10 @@
   - name: Unarchive Package
     unarchive: src="{{ install_dir }}/jdk-8u191-linux-x64.tar.gz"
       dest="{{ install_dir }}"
-      copy=no
-      owner=tomcat
-      mode=0755
+      copy: no
+      owner: tomcat
+      group: tomcat
+      mode: 0755
     become: true
     become_method: sudo
     become_user: root
@@ -33,9 +35,10 @@
   - name: Unarchive package
     unarchive: src="{{ install_dir }}/apache-tomcat-8.0.53.tar.gz"
        dest="{{ install_dir }}"
-       copy=no
-       owner=tomcat
-       mode=0755
+       copy: no
+       owner: tomcat
+       group: tomcat
+       mode: 0755
     become: true
     become_method: sudo
     become_user: root
@@ -64,7 +67,7 @@
       line='PATH=$PATH:/opt'
  
   - name: Write tomcat startupscript to /usr/lib/systemd/system/tomcat.service
-    copy: src={{ install_dir }}/tomcatsystemdscript dest=/usr/lib/systemd/system/tomcat.service mode=0755 owner=root backup=yes
+    copy: src={{ install_dir }}/tomcatsystemdscript dest=/usr/lib/systemd/system/tomcat.service mode=0755 owner=root 
 
   - name: Add to the tomcat-users.xml file
     lineinfile:
