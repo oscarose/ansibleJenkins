@@ -24,10 +24,10 @@
   - name: Unarchive Package
     unarchive: src="{{ install_dir }}/jdk-8u191-linux-x64.tar.gz"
       dest="{{ install_dir }}"
-      copy: no
-      owner: tomcat
-      group: tomcat
-      mode: 0755
+      copy=no
+      owner=tomcat
+      group=tomcat
+      mode=0755
     become: true
     become_method: sudo
     become_user: root
@@ -35,10 +35,10 @@
   - name: Unarchive package
     unarchive: src="{{ install_dir }}/apache-tomcat-8.0.53.tar.gz"
        dest="{{ install_dir }}"
-       copy: no
-       owner: tomcat
-       group: tomcat
-       mode: 0755
+       copy=no
+       owner=tomcat
+       group=tomcat
+       mode=0755
     become: true
     become_method: sudo
     become_user: root
