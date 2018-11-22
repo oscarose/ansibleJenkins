@@ -6,7 +6,7 @@
   tasks:
   - name: Get Artifacts
     get_url:
-      url: http://54.174.183.219:8081/artifactory/CD-MY-STAGE/{{ item }}
+      url: http://34.229.232.75:8081/artifactory/CD-MY-STAGE/{{ item }}
       url_username: "{{ artifactory_user }}"
       url_password: "{{ artifactory_password }}"
       dest: "{{ install_dir }}"
@@ -15,7 +15,7 @@
     with_items:
      - jdk-8u191-linux-x64.tar.gz
      - apache-tomcat-8.0.53.tar.gz
-     - tomcatsystemdscript
+     - tomcat
     become: true
     become_method: sudo
     become_user: root 
@@ -62,9 +62,12 @@
       state=present
       insertbefore=export
       line='PATH=$PATH:/opt'
- 
+      
+  - name: Touch file
+    command: touch /usr/lib/systemd/system/tomcat.service
+    
   - name: Write tomcat startupscript to /usr/lib/systemd/system/tomcat.service
-    template: src={{ install_dir }}/tomcatsystemdscript dest=/usr/lib/systemd/system/tomcat.service mode=0755 owner=root backup=yes
+    template: src={{ install_dir }}/tomcat dest=/usr/lib/systemd/system/tomcat.service mode=0755 owner=root backup=yes
 
   - name: Add to the tomcat-users.xml file
     lineinfile:
@@ -78,7 +81,7 @@
   
   - name: Get Artifacts
     get_url:
-      url: http://54.174.183.219:8081/artifactory/CD-MY-STAGE/{{ item }}
+      url: http://34.229.232.75:8081/artifactory/CD-MY-STAGE/{{ item }}
       url_username: "{{ artifactory_user }}"
       url_password: "{{ artifactory_password }}"
       dest: "{{ jenkins_dir }}"
