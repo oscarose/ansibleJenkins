@@ -1,4 +1,4 @@
-- hosts: current
+- hosts: all
   gather_facts: yes
   become: true
   become_method: sudo
